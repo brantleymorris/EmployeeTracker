@@ -141,7 +141,7 @@ connection.connect(function(err) {
                         }
                     }
                     let query = "INSERT INTO roles (title, salary, department_id) VALUE (?, ?, ?);";
-                    connection.query(query, [{title: answers.title}, {salary: answers.salary}, {department_id: selectedID}], function (err) { // second condition needs to be an array of values to pass into query, may need to set variable array to pass in
+                    connection.query(query, [{title: answers.title}, {salary: answers.salary}, {department_id: selectedID}], function (err) {
                         if (err) throw err;
                         beginProgram();
                     });
@@ -211,7 +211,7 @@ connection.connect(function(err) {
                         }
                         
                         let query = "INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUE (?, ?, ?, ?);";
-                        connection.query(query, [{first_name: answers.firstName}, {last_name: answers.lastName}, roleID, managerID], function (err) { 
+                        connection.query(query, [answers.firstName, answers.lastName, roleID, managerID], function (err) { 
                             if (err) throw err;
                             beginProgram();
                         });
@@ -260,7 +260,6 @@ connection.connect(function(err) {
     // view employees by department
     function viewByDepartment() {
 
-
         connection.query("SELECT * FROM departments", function (err, res) {
             let departmentsArray = [];
             let departmentsID = [];
@@ -268,7 +267,7 @@ connection.connect(function(err) {
             if (err) throw err;
             for (let i = 0; i < res.length; i++) {
                 departmentsArray.push(res[i].department_name);
-                departmentsID.push(re[i].id);
+                departmentsID.push(res[i].id);
             }
 
             inquirer
